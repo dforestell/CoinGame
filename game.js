@@ -1,33 +1,42 @@
 // define variables
-var game;
-var player;
-var platforms;
-var badges;
-var items;
-var cursors;
-var jumpButton;
-var text;
-var winningMessage;
-var won = false;
-var currentScore = 0;
-var winningScore = 100;
+let game;
+let player;
+let platforms;
+let badges;
+let items;
+let cursors;
+let jumpButton;
+let text;
+let winningMessage;
+let won = false;
+let currentScore = 0;
+let winningScore = 100;
 
 // add collectable items to the game
 function addItems() {
   items = game.add.physicsGroup();
   createItem(375, 300, 'coin');
+  createItem(233, 444, 'coin');
+  createItem(0, 5, 'coin');
+  createItem(100, 100, 'coin');
+  createItem(650, 400, 'coin');
+  createItem(550, 100, 'coin');
+  createItem(450, 333, 'coin');
 }
 
 // add platforms to the game
 function addPlatforms() {
   platforms = game.add.physicsGroup();
-  platforms.create(450, 150, 'platform');
+  platforms.create(450, 500, 'platform');
+  platforms.create(50, 400, 'platform');
+  platforms.create(300, 255, 'platform2');
+  platforms.create(600, 280, 'platform2');
   platforms.setAll('body.immovable', true);
 }
 
 // create a single animated item and add to screen
 function createItem(left, top, image) {
-  var item = items.create(left, top, image);
+  let item = items.create(left, top, image);
   item.animations.add('spin');
   item.animations.play('spin', 10, true);
 }
@@ -35,16 +44,17 @@ function createItem(left, top, image) {
 // create the winning badge and add to screen
 function createBadge() {
   badges = game.add.physicsGroup();
-  var badge = badges.create(750, 400, 'badge');
+  let badge = badges.create(750, 400, 'badge');
   badge.animations.add('spin');
   badge.animations.play('spin', 10, true);
 }
 
 // when the player collects an item on the screen
 function itemHandler(player, item) {
+  console.log("hit this?")
   item.kill();
-  currentScore = currentScore + 10;
-  if (currentScore === winningScore) {
+  currentScore = currentScore + 15;
+  if (currentScore >= winningScore) {
       createBadge();
   }
 }
@@ -65,6 +75,7 @@ window.onload = function () {
     
     //Load images
     game.load.image('platform', 'platform_1.png');
+    game.load.image('platform2', 'platform_2.png');
     
     //Load spritesheets
     game.load.spritesheet('player', 'chalkers.png', 48, 62);
